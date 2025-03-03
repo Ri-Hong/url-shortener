@@ -1,0 +1,26 @@
+edition = "2023";
+
+package urlshortener;
+
+option go_package = "generated/api";
+
+service URLShortener {
+    rpc ShortenURL (ShortenRequest) returns (ShortenResponse);
+    rpc ExpandURL (ExpandRequest) returns (ExpandResponse);
+}
+
+message ShortenRequest {
+    string long_url = 1;
+}
+
+message ShortenResponse {
+    string short_url = 1;
+}
+
+message ExpandRequest {
+    string short_url = 1;
+}
+
+message ExpandResponse {
+    string long_url = 1;
+}
