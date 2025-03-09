@@ -20,4 +20,7 @@ docker compose -f docker-compose-postgres.yml down
 
 # To connect to the database
 PGPASSWORD="mypassword" psql -h localhost -U myuser -d urlshortener
+
+# To create a migration
+migrate create -ext=sql -dir=infra/database/migrations -seq <name>
 ```
