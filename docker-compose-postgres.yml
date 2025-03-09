@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: urlshortener
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  migrations:
+    image: migrate/migrate
+    container_name: migrate_service
+    depends_on:
+      - postgres
+    volumes:
+      - ./infra/database/migrations:/migrations
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://myuser:mypassword@postgres:5432/urlshortener?sslmode=disable",
+      "up"
+    ]
+    restart: on-failure
+
+volumes:
+  pg_data:
