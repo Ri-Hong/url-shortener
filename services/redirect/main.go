@@ -61,10 +61,10 @@ func (s *URLRedirector) RedirectHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	// Increment the visit count
-	_, err = s.db.Exec("UPDATE urls SET visit_count = COALESCE(visit_count, 0) + 1 WHERE short_code = $1", shortCode)
+	// Increment the click count
+	_, err = s.db.Exec("UPDATE urls SET click_count = COALESCE(click_count, 0) + 1 WHERE short_code = $1", shortCode)
 	if err != nil {
-		log.Printf("Failed to update visit count: %v", err)
+		log.Printf("Failed to update click count: %v", err)
 		// Continue with redirect even if update fails
 	}
 
